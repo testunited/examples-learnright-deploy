@@ -1,4 +1,4 @@
 env:
   name: prd
   namespace: learnright-prd
-  host: learnright.minikube.local 
+  host: learnright.org 

@@ -1,4 +1,4 @@
 env:
   name: int
   namespace: learnright-int
-  host: int.learnright.minikube.local 
+  host: int.learnright.org 

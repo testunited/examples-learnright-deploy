@@ -1,7 +1,7 @@
 #! /bin/bash
-registry_host="asia.gcr.io"
-registry_ns="chamith-testunited/testunited/examples-learnright"
-image_prefix="learnright"
+registry_host="docker.io"
+registry_ns="testunited"
+image_prefix="examples-learnright"
 chart_dir="learnright"
 chart_file="$chart_dir/Chart.yaml"
 image_values_file="$chart_dir/values.images.yaml"
@@ -61,5 +61,5 @@ printf "%s\n" "app_version: ${app_version}"
 printf "%s\n" "release_name: ${release_name}"
 printf "%s\n" "chart_dir: ${chart_dir}"
 
-helm upgrade -i -f $image_values_file -f $env_values_file --description appVersion:$app_version $release_name $chart_dir
+helm upgrade -i -f $image_values_file -f $env_values_file --description appVersion:$app_version $release_name $chart_dir --namespace=${release_name}
 # helm upgrade -i -f ./learnright/values.images.yaml -f ./learnright/values.int.yaml learnright-int ./learnright/
