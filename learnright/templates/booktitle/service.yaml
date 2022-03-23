@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{ .Release.namespace }}
+  name: booktitle
+spec:
+  type: ClusterIP
+  selector:
+    app: booktitle
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ .Release.namespace }}
+  name: provisioning
+  labels:
+    app: provisioning
+spec:
+  selector:
+    matchLabels:
+      app: provisioning
+  template:
+    metadata:
+      labels:
+        app: provisioning
+    spec:
+      containers:
+      - name: provisioning
+        image: {{ .Values.images.provisioning }}
+        env:
+        - name: server.port
+          value: "80"
+        - name: spring.jpa.hibernate.ddl-auto
+          value: "none"
+        - name: spring.datasource.url
+          value: "jdbc:mysql://mysql:3306/learnright"
+        - name: spring.datasource.username
+          value: "springuser"
+        - name: spring.datasource.password
+          value: "learnright_spring"
+        - name: booktitle.service.url
+          value: "http://booktitle"
+        - name: course.service.url
+          value: "http://course"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80

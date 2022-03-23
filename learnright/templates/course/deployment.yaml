@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ .Release.namespace }}
+  name: course
+  labels:
+    app: course
+spec:
+  selector:
+    matchLabels:
+      app: course
+  template:
+    metadata:
+      labels:
+        app: course
+    spec:
+      containers:
+      - name: course
+        image: {{ .Values.images.course }}
+        env:
+        - name: server.port
+          value: "80"
+        - name: spring.jpa.hibernate.ddl-auto
+          value: "none"
+        - name: spring.datasource.url
+          value: "jdbc:mysql://mysql:3306/learnright"
+        - name: spring.datasource.username
+          value: "springuser"
+        - name: spring.datasource.password
+          value: "learnright_spring"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80

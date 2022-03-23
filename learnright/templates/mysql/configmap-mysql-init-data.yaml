@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: {{ .Release.namespace }}
+  name: mysql-init-data
+data:
+  mysql-init-data.sql: |
+    CREATE DATABASE learnright;
+    CREATE USER 'springuser'@'%' identified by 'learnright_spring';
+    GRANT ALL on learnright.* to 'springuser'@'%';
+
+    USE learnright;
+    
+    DROP TABLE IF EXISTS `book_title`;
+    /*!40101 SET @saved_cs_client     = @@character_set_client */;
+    /*!40101 SET character_set_client = utf8 */;
+    CREATE TABLE `book_title` (
+      `id` int(11) NOT NULL,
+      `author` varchar(255) DEFAULT NULL,
+      `name` varchar(255) DEFAULT NULL,
+      PRIMARY KEY (`id`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+    DROP TABLE IF EXISTS `course`;
+    /*!40101 SET @saved_cs_client     = @@character_set_client */;
+    /*!40101 SET character_set_client = utf8 */;
+    CREATE TABLE `course` (
+      `id` int(11) NOT NULL,
+      `book_title_id` int(11) NOT NULL,
+      `end_date` datetime DEFAULT NULL,
+      `name` varchar(255) DEFAULT NULL,
+      `start_date` datetime DEFAULT NULL,
+      `status` int(11) DEFAULT NULL,
+      PRIMARY KEY (`id`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=latin1;

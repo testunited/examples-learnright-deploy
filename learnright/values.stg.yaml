@@ -1,0 +1,4 @@
+env:
+  name: stg
+  namespace: learnright-stg
+  host: stg.learnright.minikube.local 

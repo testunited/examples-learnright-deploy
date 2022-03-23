@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: {{ .Release.namespace }}
+  name: course
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+  - host: {{ .Values.env.host }}
+    http:
+      paths:
+      - path: /courses
+        pathType: Prefix
+        backend:
+          service:
+            name: course
+            port: 
+              number: 80

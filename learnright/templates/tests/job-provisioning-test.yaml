@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  namespace: {{ .Release.namespace }}
+  name: provisioning-api-test-{{ .Release.Name }}-{{ .Chart.AppVersion }}-{{ .Release.Revision }}
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      containers:
+      - name: provisioning-api-test
+        image: asia.gcr.io/chamith-testunited/testunited-launcher
+        args: ["TEST_BUNDLE_IDS=org.testunited.examples.learnright:learnright-provisioning-service-test:0.0.1-SNAPSHOT:org.testunited.examples.learnright.provisioning", 
+        "TEST_BUNDLE_MODE=remote", 
+        "SESSION_NAME={{ .Release.Name }}-{{ .Release.Revision }}"]
+        env:
+          - name: testunited.service.url
+            value: "http://core.testunited"
+          - name: booktitle.service.url
+            value: "http://booktitle"
+          - name: booktitle.service.port
+            value: "80"
+          - name: course.service.url
+            value: "http://course"
+          - name: course.service.port
+            value: "80"
+          - name: provisioning.service.url
+            value: "http://provisioning"
+          - name: provisioning.service.port
+            value: "80"
+          - name: testunited.testbundles.repo.name
+            value: "deps"
+          - name: testunited.testbundles.repo.url
+            value: "https://repo.deps.co/chamithsri/snapshots"
+          - name: testunited.testbundles.repo.username
+            value: "DEPS6HOT54LRQDKB2EYR"
+          - name: testunited.testbundles.repo.password
+            value: "xIMkoIxBZUyA355BMp6VoD5J7406E9ROM_n7KhEo"
+      restartPolicy: Never
+  backoffLimit: 4
